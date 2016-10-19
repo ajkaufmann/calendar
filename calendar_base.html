@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="index_style.css" />
+    <meta charset="utf-8" />
+    <title> Calendar </title>
+    <style type="text/css">
+    </style>
+</head>
+<<<<<<< b0dd22c06a6783279eca8c61c45960dcc9658d7a
+<body>
+    <div id="main">
+        <input type="text" id="username" placeholder="Username"/>
+        <input type="password" id="password" placeholder="Password"/>
+        <button id="login_btn">Log In</button>
+        <h1 id="pgTitle">Your Calendar</h1>
+        <table style="width:100%">
+            <tr>
+                <th id="day0">Day</th>
+                <th id="day1">Day</th>
+                <th id="day2">Day</th>
+                <th id="day3">Day</th>
+                <th id="day4">Day</th>
+                <th id="day5">Day</th>
+                <th id="day6">Day</th>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+            </tr>
+            <tr>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+                <td>Date</td>
+            </tr>
+    </table>
+    </div>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="login.js"></script>
+</body>
+=======
+<body><div id="main">
+  <h1 id="pgTitle">Your Calendar</h1>
+  <table style="width:100%" id="table-id">
+    <tr id="headers">
+      <th id="day0">Sunday</th>
+      <th id="day1">Monday</th>
+      <th id="day2">Tuesday</th>
+      <th id="day3">Wednesday</th>
+      <th id="day4">Thursday</th>
+      <th id="day5">Friday</th>
+      <th id="day6">Saturday</th>
+    </tr>
+    <tr id="week0">
+    </tr>
+    <tr id="week1">
+    </tr>
+    <tr id="week2">
+    </tr>
+    <tr id="week3">
+    </tr>
+    <tr id="week4">
+    </tr>
+  </table>
+  <script type="text/javascript">
+  for(var i=0; i<5; i++){
+    for(var j=0; j<7; j++){
+      var newLi = document.createElement("td");  // creates a node with the tag name li
+      newLi.appendChild(document.createTextNode("Date"));
+      newLi.setAttribute("class", "veggies");
+      var weekString = "week"+i;
+      document.getElementById(weekString).appendChild(newLi);
+    }
+  }
+
+  </script>
+>>>>>>> Wireframe Updated
+
+</html>
