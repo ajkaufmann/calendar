@@ -10,7 +10,8 @@ div#main{
   margin: 0;
   padding: 10px;
 }
-#pgTitle{
+
+h1.monthName{
   align-items: center;
 }
 table, th, td {
