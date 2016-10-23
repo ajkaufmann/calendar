@@ -22,6 +22,7 @@ $stmt->bind_param('ss', $username, $event_date);
 
 $stmt->execute();
 
+$return_array[];
 $stmt->bind_result($event_id, $user, $event_name, $event_date, $event_time, $event_description, $recurring);
 while($stmt->fetch()){
 
