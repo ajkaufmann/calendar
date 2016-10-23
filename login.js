@@ -48,7 +48,7 @@ function makeEventAjax(event) {
     var event_date = document.getElementById("event_date").value;
     var event_time = document.getElementById("event_time").value;
     var recurring = document.getElementById("recurring").value;
-
+ 
     // Make a URL-encoded string for passing POST data:
     var dataString =
         "event_name=" + encodeURIComponent(event_name) +

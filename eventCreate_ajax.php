@@ -2,14 +2,10 @@
 session_start();
 require 'database.php';
 
-
-session_start();
-$destination_username = $_POST['dest'];
-$amount = $_POST['amount'];
-if($_SESSION['token'] !== $_POST['token']){
-	session_destroy();
-	die("Request forgery detected");
-}
+// if($_SESSION['token'] != $_POST['token']){
+// 	session_destroy();
+// 	die("Request forgery detected");
+// }
 
 header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
 
@@ -31,7 +27,7 @@ if(!$stmt){
   exit;
 }
 
-$stmt->bind_param('sssss', $username, $name, $event_date, $event_time, $recurring);
+$stmt->bind_param('ssbbs', $username, $name, $event_date, $event_time, $recurring);
 
 $stmt->execute();
 

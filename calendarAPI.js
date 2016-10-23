@@ -145,10 +145,17 @@ $(document).ready(function() {
 
     // Change the month when the "next" button is pressed
     document.getElementById("next_month_btn").addEventListener("click", function(event) {
-        currentMonth = currentMonth.nextMonth(); // Previous month would be currentMonth.prevMonth()
+        currentMonth = currentMonth.nextMonth(); //
         updateCalendar(); // Whenever the month is updated, we'll need to re-render the calendar in HTML
         alert("The new month is " + currentMonth.month + " " + currentMonth.year);
     }, false);
+    document.getElementById("back_month_btn").addEventListener("click", function(event) {
+        currentMonth = currentMonth.prevMonth(); //
+        updateCalendar(); // Whenever the month is updated, we'll need to re-render the calendar in HTML
+        alert("The new month is " + currentMonth.month + " " + currentMonth.year);
+    }, false);
+
+    updateCalendar(); // load the current month's calendar
 
 
     // This updateCalendar() function only alerts the dates in the currently specified month.  You need to write
@@ -161,45 +168,24 @@ $(document).ready(function() {
         clearCalendar();
         for (var w in weeks) {
             var days = weeks[w].getDates();
-            //alert(w);
-
-            // for (var i = 0; i < 5; i++) {
-            //     for (var j = 0; j < 7; j++) {
-            //         var newLi = document.createElement("td");
-            //         dateString = aWeek[j] // creates a node with the tag name li
-            //         newLi.appendChild(document.createTextNode(dateString));
-            //         newLi.setAttribute("class", "veggies");
-            //         var weekString = "week" + i;
-            //         document.getElementById(weekString).appendChild(newLi);
-            //     }
-            // }
-            // days contains normal JavaScript Date objects.
             var weekString = "week" + w;
-            //alert("Week starting on "+days[0]);
             var newWeek = document.createElement("tr");
             newWeek.setAttribute("id", weekString);
             document.getElementById("table-id").appendChild(newWeek);
             for (var d in days) {
                 var newLi = document.createElement("td");
-                //alert(n);
-                newLi.appendChild(document.createTextNode(days[d].getDate()));
+                if (days[d].getMonth() == currentMonth.month) {
+                    newLi.appendChild(document.createTextNode(days[d].getDate()));
+                    //for each event on that day for the user
+                        //write in a text node for that event
+                }
                 newLi.setAttribute("class", "veggies");
                 document.getElementById(weekString).appendChild(newLi);
-                // You can see console.log() output in your JavaScript debugging tool, like Firebug,
-                // WebWit Inspector, or Dragonfly.
-                //console.log(days[d].toISOString());
             }
         }
     }
 
     function clearCalendar() {
-        // for (var w in currentMonth.prevMonth()) {
-        //     var curWeek = "week" + w;
-        //     var rowNode = document.getElementById(curWeek);
-        //     while (rowNode.hasChildNodes()) {
-        //         rowNode.removeChild(rowNode.childNodes[0]);
-        //     }
-        // }
         for (var i = 0; i < 6; i++) {
             var curWeek = "week" + i;
             var rowNode = document.getElementById(curWeek);
@@ -209,9 +195,6 @@ $(document).ready(function() {
                 }
                 rowNode.remove();
             }
-
-
         }
     }
-
 });

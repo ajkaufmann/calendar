@@ -19,6 +19,7 @@
         <h1 id="monthName">Your Calendar</h1>
 
         <div id="monthSelector">
+                <button type="button" id="back_month_btn">Previous Month</button>
                 <button type="button" id="next_month_btn">Next Month</button>
         </div>
 
@@ -26,6 +27,7 @@
         Event Date: <input type="Date" id="event_date"/>
         Event Time: <input type="Time" id="event_time"/>
         Recurring (Y or N): <input type="text" id="recurring"/>
+        <!-- <input type="hidden" id="token" value="<?php echo $_SESSION['token'];?>"/> -->
 
         <table style="width:100%" id="table-id">
             <tr id="headers">
@@ -53,15 +55,6 @@
         </div>
         </table>
         <script type="text/javascript">
-        //     for (var i = 0; i < 5; i++) {
-        //         for (var j = 0; j < 7; j++) {
-        //             var newLi = document.createElement("td"); // creates a node with the tag name li
-        //             newLi.appendChild(document.createTextNode("Date"));
-        //             newLi.setAttribute("class", "veggies");
-        //             var weekString = "week" + i;
-        //             document.getElementById(weekString).appendChild(newLi);
-        //         }
-        //     }
         </script>
         <script src="login.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
