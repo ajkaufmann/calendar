@@ -2,21 +2,12 @@
 session_start();
 require 'database.php';
 
-// if($_SESSION['token'] != $_POST['token']){
-// 	session_destroy();
-// 	die("Request forgery detected");
-// }
-
 header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
 
 $username = $_SESSION['username'];
-$name = $_POST['event_name'];
-$event_date = $_POST['event_date'];
-$event_time = $_POST['event_time'];
-$recurring = $_POST['recurring'];
+$event_date = $_POST['thisMonth'];
 
-
-$stmt = $mysqli->prepare("INSERT INTO events (user, event_name, event_date, event_time, recurring) VALUES (?, ?, ?, ?, ?)");
+$stmt = $mysqli->prepare("SELECT * FROM events WHERE username=? AND event_date=?");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
@@ -27,9 +18,15 @@ if(!$stmt){
   exit;
 }
 
-$stmt->bind_param('sssss', $username, $name, $event_date, $event_time, $recurring);
+$stmt->bind_param('ss', $username, $event_date);
 
 $stmt->execute();
+
+$stmt->bind_result($event_id, $user, $event_name, $event_date, $event_time, $event_description, $recurring);
+while($stmt->fetch()){
+
+
+}
 
 $stmt->close();
 

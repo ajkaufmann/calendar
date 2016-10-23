@@ -48,7 +48,7 @@ function makeEventAjax(event) {
     var event_date = document.getElementById("event_date").value;
     var event_time = document.getElementById("event_time").value;
     var recurring = document.getElementById("recurring").value;
- 
+
     // Make a URL-encoded string for passing POST data:
     var dataString =
         "event_name=" + encodeURIComponent(event_name) +
@@ -67,9 +67,10 @@ function makeEventAjax(event) {
             alert("Event not made: ");
         }
     }, false); // Bind the callback to the load event
+
+    alert(dataString);
     xmlHttp.send(dataString); // Send the data
 }
-
 
 document.getElementById("make_event").addEventListener("click", makeEventAjax, false);
 document.getElementById("login_btn").addEventListener("click", loginAjax, false);
