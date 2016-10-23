@@ -36,6 +36,7 @@
                 <th id="day4">Thursday</th>
                 <th id="day5">Friday</th>
                 <th id="day6">Saturday</th>
+        <div id="rows">
             </tr>
             <tr id="week0">
             </tr>
@@ -47,17 +48,20 @@
             </tr>
             <tr id="week4">
             </tr>
+            <tr id="week5">
+            </tr>
+        </div>
         </table>
         <script type="text/javascript">
-            for (var i = 0; i < 5; i++) {
-                for (var j = 0; j < 7; j++) {
-                    var newLi = document.createElement("td"); // creates a node with the tag name li
-                    newLi.appendChild(document.createTextNode("Date"));
-                    newLi.setAttribute("class", "veggies");
-                    var weekString = "week" + i;
-                    document.getElementById(weekString).appendChild(newLi);
-                }
-            }
+        //     for (var i = 0; i < 5; i++) {
+        //         for (var j = 0; j < 7; j++) {
+        //             var newLi = document.createElement("td"); // creates a node with the tag name li
+        //             newLi.appendChild(document.createTextNode("Date"));
+        //             newLi.setAttribute("class", "veggies");
+        //             var weekString = "week" + i;
+        //             document.getElementById(weekString).appendChild(newLi);
+        //         }
+        //     }
         </script>
         <script src="login.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
