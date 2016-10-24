@@ -7,8 +7,7 @@ header("Content-Type: application/json"); // Since we are sending a JSON respons
 $username = $_SESSION['username'];
 $event_date = $_POST['thisMonth'];
 
-$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=?");
-$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=? AND event_date LIKE ?");
+$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=? AND event_date LIKE ?-%%");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
@@ -20,7 +19,6 @@ if(!$stmt){
 }
 
 $stmt->bind_param('ss', $username, $event_date);
-
 
 $stmt->execute();
 
@@ -37,6 +35,7 @@ while($stmt->fetch()){
     "event description" => $event_description,
     "recurring" => $recurring
   ));
+}
 
 $stmt->close();
 
