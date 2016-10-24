@@ -196,7 +196,7 @@ $(document).ready(function() {
         rowNode.remove();
       }
     }
-  }
+  } 
 
   function getUserEvents(event) {
     var thisMonth = currentMonth.year + "-" + currentMonth.month + "-%%";

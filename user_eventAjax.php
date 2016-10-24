@@ -18,22 +18,22 @@ if(!$stmt){
   exit;
 }
 
-$stmt->bind_param('ss', $username, $event_date);
-
-$stmt->execute();
-
-$return_array[];
-$stmt->bind_result($event_id, $user, $event_name, $event_date, $event_time, $event_description, $recurring);
-while($stmt->fetch()){
-
-
+$myArray = array();
+while($row = $stmt->fetch_array(MYSQL_ASSOC)){
+        $myArray[] = $row;
 }
+echo json_encode($myArray);
+// $stmt->bind_result($event_id, $user, $event_name, $event_date, $event_time, $event_description, $recurring);
+// while($stmt->fetch()){
+//
+//
+// }
 
 $stmt->close();
 
-echo json_encode(array(
-  "success" => true
-));
-exit;
+// echo json_encode(array(
+//   "success" => true
+// ));
+// exit;
 
 ?>
