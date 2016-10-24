@@ -147,12 +147,12 @@ $(document).ready(function() {
   document.getElementById("next_month_btn").addEventListener("click", function(event) {
     currentMonth = currentMonth.nextMonth(); //
     updateCalendar(); // Whenever the month is updated, we'll need to re-render the calendar in HTML
-    alert("The new month is " + currentMonth.month + " " + currentMonth.year);
+    // alert("The new month is " + currentMonth.month + " " + currentMonth.year);
   }, false);
   document.getElementById("back_month_btn").addEventListener("click", function(event) {
     currentMonth = currentMonth.prevMonth(); //
     updateCalendar(); // Whenever the month is updated, we'll need to re-render the calendar in HTML
-    alert("The new month is " + currentMonth.month + " " + currentMonth.year);
+    // alert("The new month is " + currentMonth.month + " " + currentMonth.year);
   }, false);
 
   updateCalendar(); // load the current month's calendar
