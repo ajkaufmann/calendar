@@ -199,7 +199,8 @@ $(document).ready(function() {
   }
 
   function getUserEvents(event) {
-    var thisMonth = currentMonth.year + "-" + currentMonth.month + "-%%";
+    var thisMonth = "2016-10-10";
+    // var thisMonth = currentMonth.year + "-" + currentMonth.month + "-%%";
     alert(thisMonth);
     // Make a URL-encoded string for passing POST data:
     var dataString = "thisMonth=" + encodeURIComponent(thisMonth);
