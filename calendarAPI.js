@@ -161,7 +161,6 @@ $(document).ready(function() {
   // This updateCalendar() function only alerts the dates in the currently specified month.  You need to write
   // it to modify the DOM (optionally using jQuery) to display the days and weeks in the current month.
   function updateCalendar() {
-
     getUserEvents();
     var weeks = currentMonth.getWeeks();
     var newMonth = months[currentMonth.month];
@@ -197,7 +196,7 @@ $(document).ready(function() {
         rowNode.remove();
       }
     }
-  } 
+  }
 
   function getUserEvents(event) {
     var thisMonth = currentMonth.year + "-" + currentMonth.month + "-%%";

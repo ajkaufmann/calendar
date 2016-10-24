@@ -7,7 +7,7 @@ header("Content-Type: application/json"); // Since we are sending a JSON respons
 $username = $_SESSION['username'];
 $event_date = $_POST['thisMonth'];
 
-$stmt = $mysqli->prepare("SELECT * FROM events WHERE username=? AND event_date=?");
+$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=?");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
@@ -17,10 +17,10 @@ if(!$stmt){
 
   exit;
 }
-
+$stmt->bind_result($event_id, $user, $event_name, $event_date, $event_time, $event_description, $recurring);
 $myArray = array();
-while($row = $stmt->fetch_array(MYSQL_ASSOC)){
-        $myArray[] = $row;
+while($stmt->fetch()){
+        $myArray[] = {$event_id, $user, $event_name, $event_date, $event_time, $event_description, $recurring};
 }
 echo json_encode($myArray);
 // $stmt->bind_result($event_id, $user, $event_name, $event_date, $event_time, $event_description, $recurring);
