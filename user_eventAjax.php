@@ -7,7 +7,7 @@ header("Content-Type: application/json"); // Since we are sending a JSON respons
 $username = $_SESSION['username'];
 $event_date = $_POST['thisMonth'];
 
-$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=? AND event_date LIKE ?-%%");
+$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=? AND event_date LIKE ?");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,

@@ -199,9 +199,10 @@ $(document).ready(function() {
   }
 
   function getUserEvents(event) {
-    var numMonth = currentMonth+1;
-    if(numMonth<10) var thisMonth = currentMonth.year + "-0" + numMonth + "%";
-    else var thisMonth = currentMonth.year + "-" + numMonth + "%";
+    // var thisMonth = "2016-10-10";
+    var numMonth = currentMonth.month+1;
+    if(numMonth<10) var thisMonth = currentMonth.year + "-0" + numMonth+"%";
+    else var thisMonth = currentMonth.year + "-" + numMonth+"%";
     alert(thisMonth);
     // Make a URL-encoded string for passing POST data:
     var dataString = "thisMonth=" + encodeURIComponent(thisMonth);
@@ -214,8 +215,8 @@ $(document).ready(function() {
   }
   function getUserEventsCallback(event) {
     alert( "Your file contains the text: " + event.target.responseText );
-    var jsonData = JSON.parse(event.target.responseText);
-    alert(jsonData);
+    var jsonData = JSON.parse(event.target);
+    alert("Json data =>"+jsonData);
   }
   document.getElementById("login_btn").addEventListener("click", getUserEvents, false);
 });
