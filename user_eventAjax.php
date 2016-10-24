@@ -7,11 +7,11 @@ header("Content-Type: application/json"); // Since we are sending a JSON respons
 $username = $_SESSION['username'];
 $event_date = $_POST['thisMonth'];
 
-$stmt = $mysqli->prepare("SELECT * FROM events WHERE username=? AND event_date=?");
+$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=? AND event_date=?");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
-    "message" => "Incorrect Username or Password"
+    "message" => "statement failed, User:".$username.", Date:".$event_date
   ));
   exit;
 
@@ -22,18 +22,26 @@ $stmt->bind_param('ss', $username, $event_date);
 
 $stmt->execute();
 
-$return_array[];
+// $return_array[];
 $stmt->bind_result($event_id, $user, $event_name, $event_date, $event_time, $event_description, $recurring);
+$rows = array();
 while($stmt->fetch()){
-
-
+  echo json_encode(array(
+    "eventid" => $event_id,
+    "user" => $user,
+    "event_name" => $event_name,
+    "event_date" => $event_date,
+    "event_time" => $event_time,
+    "event description" => $event_description,
+    "recurring" => $recurring
+  ));
 }
 
 $stmt->close();
 
-echo json_encode(array(
-  "success" => true
-));
+// echo json_encode(array(
+//   "success" => true
+// ));
 exit;
 
 ?>

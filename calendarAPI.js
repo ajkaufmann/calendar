@@ -161,7 +161,7 @@ $(document).ready(function() {
   // This updateCalendar() function only alerts the dates in the currently specified month.  You need to write
   // it to modify the DOM (optionally using jQuery) to display the days and weeks in the current month.
   function updateCalendar() {
-
+    getUserEvents();
     var weeks = currentMonth.getWeeks();
     var newMonth = months[currentMonth.month];
     $('h1#monthName').html(months[currentMonth.month]);
@@ -199,7 +199,8 @@ $(document).ready(function() {
   }
 
   function getUserEvents(event) {
-    var thisMonth = currentMonth.year + "-" + currentMonth.month + "-%%";
+    var thisMonth = "2016-10-10";
+    // var thisMonth = currentMonth.year + "-" + currentMonth.month + "-%%";
     alert(thisMonth);
     // Make a URL-encoded string for passing POST data:
     var dataString = "thisMonth=" + encodeURIComponent(thisMonth);
@@ -207,15 +208,11 @@ $(document).ready(function() {
     var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
     xmlHttp.open("POST", "user_eventAjax.php", true); // Starting a POST request (NEVER send passwords as GET variables!!!)
     xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // It's easy to forget this line for POST requests
-    xmlHttp.addEventListener("load", function(event) {
-      var jsonData = JSON.parse(event.target.responseText); // parse the JSON into a JavaScript object
-      if (jsonData.success) { // in PHP, this was the "success" key in the associative array; in JavaScript, it's the .success property of jsonData
-      alert("Event Resquest made!");
-    } else {
-      alert("Event Resquest not made.  " + jsonData.message);
-    }
-  }, false); // Bind the callback to the load event
-  xmlHttp.send(dataString); // Send the data
-}
-document.getElementById("login_btn").addEventListener("click", getUserEvents, false);
+    xmlHttp.addEventListener("load", getUserEventsCallback, false); // Bind the callback to the load event
+    xmlHttp.send(dataString); // Send the data
+  }
+  function getUserEventsCallback(event) {
+    alert( "Your file contains the text: " + event.target.responseText );
+  }
+  document.getElementById("login_btn").addEventListener("click", getUserEvents, false);
 });
