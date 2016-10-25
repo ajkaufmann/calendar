@@ -23,7 +23,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- var JSONResults = [];
+ var JSONString;
 
 $(document).ready(function() {
 
@@ -163,7 +163,8 @@ $(document).ready(function() {
     // it to modify the DOM (optionally using jQuery) to display the days and weeks in the current month.
     function updateCalendar() {
         getUserEvents();
-        //var x = JSONResults[0][0];
+        alert(JSONString);
+        obj = JSON.parse(JSONString);
         var weeks = currentMonth.getWeeks();
         var newMonth = months[currentMonth.month];
         $('h1#monthName').html(months[currentMonth.month]);
@@ -219,20 +220,26 @@ $(document).ready(function() {
 
     function getUserEventsCallback(event) {
         //alert( "Your file contains the text: " + event.target.responseText );
+        var str = '{ "events" : [';
         var splitJSONString = event.target.responseText.split("}{");
         for (var i in splitJSONString) {
             if (i == 0) {
-                fixed = splitJSONString[i] + "}";
+                fixed = splitJSONString[i] + "},";
             } else if (i == splitJSONString.length - 1) {
                 var fixed = "{" + splitJSONString[i];
             } else {
-                var fixed = "{" + splitJSONString[i] + "}";
+                var fixed = "{" + splitJSONString[i] + "},";
             }
-            var obj = JSON.parse(fixed);
+            str += fixed;
             //alert(obj.event_name);
-            JSONResults.push(obj);
+            //JSONResults[i] = obj;
             //alert(JSONResults[i].event_name);
         }
+
+        str += ']}'
+        alert(str);
+        JSONString = str;
+        alert(JSONString);
         //var jsonData = JSON.parse(event.target.responseText);
         //alert("Json data =>"+jsonData);
     }
