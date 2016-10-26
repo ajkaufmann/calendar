@@ -23,7 +23,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- var JSONString;
+var JSONObj = {};
 
 $(document).ready(function() {
 
@@ -148,46 +148,100 @@ $(document).ready(function() {
     // Change the month when the "next" button is pressed
     document.getElementById("next_month_btn").addEventListener("click", function(event) {
         currentMonth = currentMonth.nextMonth(); //
-        updateCalendar(); // Whenever the month is updated, we'll need to re-render the calendar in HTML
+        getUserEvents(); // Whenever the month is updated, we'll need to re-render the calendar in HTML
         // alert("The new month is " + currentMonth.month + " " + currentMonth.year);
     }, false);
     document.getElementById("back_month_btn").addEventListener("click", function(event) {
         currentMonth = currentMonth.prevMonth(); //
-        updateCalendar(); // Whenever the month is updated, we'll need to re-render the calendar in HTML
+        getUserEvents(); // Whenever the month is updated, we'll need to re-render the calendar in HTML
         // alert("The new month is " + currentMonth.month + " " + currentMonth.year);
     }, false);
 
-    updateCalendar(); // load the current month's calendar
+    getUserEvents(); // load the current month's calendar
+
+    function getUserEvents() {
+        var thisMonth = "2016-10-";
+        var numMonth = currentMonth.month + 1;
+        if (numMonth < 10) var thisMonth = currentMonth.year + "-0" + numMonth + "%";
+        else var thisMonth = currentMonth.year + "-" + numMonth + "%";
+        alert(thisMonth);
+        // Make a URL-encoded string for passing POST data:
+        var dataString = "thisMonth=" + encodeURIComponent(thisMonth);
+        $.post('user_eventAjax.php', {thisMonth: thisMonth}).done(
+                function(data) {
+                        JSONObj = data;
+                        updateCalendar(JSONObj);
+                        //alert(JSONObj[0].event_name);
+                }
+
+        );
+        // var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
+        // xmlHttp.open("POST", "user_eventAjax.php", true); // Starting a POST request (NEVER send passwords as GET variables!!!)
+        // xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // It's easy to forget this line for POST requests
+        // xmlHttp.addEventListener("load", getUserEventsCallback, false); // Bind the callback to the load event
+        // xmlHttp.send(dataString); // Send the data
+    }
 
     // This updateCalendar() function only alerts the dates in the currently specified month.  You need to write
     // it to modify the DOM (optionally using jQuery) to display the days and weeks in the current month.
-    function updateCalendar() {
-        getUserEvents();
-        alert(JSONString);
-        obj = JSON.parse(JSONString);
-        var weeks = currentMonth.getWeeks();
-        var newMonth = months[currentMonth.month];
-        $('h1#monthName').html(months[currentMonth.month]);
-        clearCalendar();
-        for (var w in weeks) {
-            var days = weeks[w].getDates();
-            var weekString = "week" + w;
-            var newWeek = document.createElement("tr");
-            newWeek.setAttribute("id", weekString);
-            document.getElementById("table-id").appendChild(newWeek);
-            for (var d in days) {
-                var newLi = document.createElement("td");
-                if (days[d].getMonth() == currentMonth.month) {
-                    newLi.appendChild(document.createTextNode(days[d].getDate()));
-                    //for each event on that day for the user
-                    //write in a text node for that event
+    function updateCalendar(dummyVar) {
+        console.log(dummyVar);
+        if(typeof(dummyVar) == undefined){
+                alert("No dummy var is set");
+                var weeks = currentMonth.getWeeks();
+                var newMonth = months[currentMonth.month];
+                $('h1#monthName').html(months[currentMonth.month]);
+                clearCalendar();
+                for (var w in weeks) {
+                    var days = weeks[w].getDates();
+                    var weekString = "week" + w;
+                    var newWeek = document.createElement("tr");
+                    newWeek.setAttribute("id", weekString);
+                    document.getElementById("table-id").appendChild(newWeek);
+                    for (var d in days) {
+                        var newLi = document.createElement("td");
+                        if (days[d].getMonth() == currentMonth.month) {
+                            newLi.appendChild(document.createTextNode(days[d].getDate()));
+                            //for each event on that day for the user
+                            //write in a text node for that event
+                        }
+                        newLi.setAttribute("class", "veggies");
+                        document.getElementById(weekString).appendChild(newLi);
+                    }
                 }
-                newLi.setAttribute("class", "veggies");
-                document.getElementById(weekString).appendChild(newLi);
-            }
         }
+        else{
+                alert("Dummy var is set.");
+                alert(dummyVar[0].event_name);
+                //we need to be able to access the stuff from getUserEvents right after we call it...
+                //obj = JSON.parse(JSONString);
+                // alert(obj.events[0].event_name);
 
+                    var weeks = currentMonth.getWeeks();
+                    var newMonth = months[currentMonth.month];
+                    $('h1#monthName').html(months[currentMonth.month]);
+                    clearCalendar();
+                    for (var w in weeks) {
+                        var days = weeks[w].getDates();
+                        var weekString = "week" + w;
+                        var newWeek = document.createElement("tr");
+                        newWeek.setAttribute("id", weekString);
+                        document.getElementById("table-id").appendChild(newWeek);
+                        for (var d in days) {
+                            var newLi = document.createElement("td");
+                            if (days[d].getMonth() == currentMonth.month) {
+                                newLi.appendChild(document.createTextNode(days[d].getDate()));
+                                //for each event on that day for the user
+                                //write in a text node for that event
+                            }
+                            newLi.setAttribute("class", "veggies");
+                            document.getElementById(weekString).appendChild(newLi);
+                        }
+                    }
+
+        }
     }
+
 
     function clearCalendar() {
         for (var i = 0; i < 6; i++) {
@@ -202,44 +256,31 @@ $(document).ready(function() {
         }
     }
 
-    function getUserEvents(event) {
-        var thisMonth = "2016-10-10";
-        var numMonth = currentMonth.month + 1;
-        if (numMonth < 10) var thisMonth = currentMonth.year + "-0" + numMonth + "%";
-        else var thisMonth = currentMonth.year + "-" + numMonth + "%";
-        alert(thisMonth);
-        // Make a URL-encoded string for passing POST data:
-        var dataString = "thisMonth=" + encodeURIComponent(thisMonth);
 
-        var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
-        xmlHttp.open("POST", "user_eventAjax.php", true); // Starting a POST request (NEVER send passwords as GET variables!!!)
-        xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // It's easy to forget this line for POST requests
-        xmlHttp.addEventListener("load", getUserEventsCallback, false); // Bind the callback to the load event
-        xmlHttp.send(dataString); // Send the data
-    }
 
     function getUserEventsCallback(event) {
         //alert( "Your file contains the text: " + event.target.responseText );
-        var str = '{ "events" : [';
-        var splitJSONString = event.target.responseText.split("}{");
-        for (var i in splitJSONString) {
-            if (i == 0) {
-                fixed = splitJSONString[i] + "},";
-            } else if (i == splitJSONString.length - 1) {
-                var fixed = "{" + splitJSONString[i];
-            } else {
-                var fixed = "{" + splitJSONString[i] + "},";
-            }
-            str += fixed;
-            //alert(obj.event_name);
-            //JSONResults[i] = obj;
-            //alert(JSONResults[i].event_name);
-        }
+        // var str = '{ "events" : [';
+        // var splitJSONString = event.target.responseText.split("}{");
+        // for (var i in splitJSONString) {
+        //     if (i == 0) {
+        //         fixed = splitJSONString[i] + "},";
+        //     } else if (i == splitJSONString.length - 1) {
+        //         var fixed = "{" + splitJSONString[i];
+        //     } else {
+        //         var fixed = "{" + splitJSONString[i] + "},";
+        //     }
+        //     str += fixed;
+        //     //alert(obj.event_name);
+        //     //JSONResults[i] = obj;
+        //     //alert(JSONResults[i].event_name);
+        // }
 
-        str += ']}'
-        alert(str);
-        JSONString = str;
+        //str += ']}'
+        //alert(str);
+        JSONString = event.target.responseText;
         alert(JSONString);
+
         //var jsonData = JSON.parse(event.target.responseText);
         //alert("Json data =>"+jsonData);
     }
