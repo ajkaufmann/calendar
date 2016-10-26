@@ -18,7 +18,14 @@ table, th, td {
   border: 1px solid black;
 }
 td.veggies{
+<<<<<<< HEAD
         font-weight: bolder;
+=======
+  font-weight: normal;
+}
+.veggies .eventActivities{
+  font-weight: bold;
+>>>>>>> ae5a4ca0e4bbf379c877d917ea0ddcf2a4615bac
 }
 th, td {
   padding: 15px;
