@@ -4,6 +4,13 @@ require 'database.php';
 
 header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
 
+if(!isset($_SESSION['username'])){
+  echo json_encode(array(
+    "event_name" => "_no_user"
+  ));
+  exit;
+}
+
 $username = $_SESSION['username'];
 $event_date = $_POST['thisMonth'];
 
@@ -13,8 +20,6 @@ if(!$stmt){
     "success" => false,
     "message" => "statement failed, User:".$username.", Date:".$event_date
   ));
-  exit;
-
   exit;
 }
 
