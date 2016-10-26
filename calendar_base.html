@@ -8,25 +8,25 @@
 
     </style>
 </head>
+
 <body>
     <div id="main">
-        <input type="text" id="username" placeholder="Username" />
-        <input type="password" id="password" placeholder="Password" />
-        <button id="login_btn">Log In</button>
-        <button type="button" id="register_btn">Register</button>
-
+        <div class="loginForm">
+            <input type="text" id="username" placeholder="Username" />
+            <input type="password" id="password" placeholder="Password" />
+            <button id="login_btn">Log In</button>
+            <button type="button" id="register_btn">Register</button>
+        </div>
+        <div class="logoutForm">
+                <button type="button" id="logout_btn">Logout</button>
+        </div>
 
         <h1 id="monthName">Your Calendar</h1>
         <div id="monthSelector">
-                <button type="button" id="back_month_btn">Previous Month</button>
-                <button type="button" id="next_month_btn">Next Month</button>
+            <button type="button" id="back_month_btn">Previous Month</button>
+            <button type="button" id="next_month_btn">Next Month</button>
         </div>
-        <br>
-
-        Event Name: <input type="text" id="event_name"/>
-        Event Date: <input type="Date" id="event_date"/>
-        Event Time: <input type="Time" id="event_time"/><br>
-        Recurring (Y or N): <input type="text" id="recurring"/>
+        <br> Event Name: <input type="text" id="event_name" /> Event Date: <input type="Date" id="event_date" /> Event Time: <input type="Time" id="event_time" /><br> Recurring (Y or N): <input type="text" id="recurring" />
         <button type="button" id="make_event">Make Event</button>
         <!-- <input type="hidden" id="token" value="<?php echo $_SESSION['token'];?>"/> -->
 
@@ -39,7 +39,7 @@
                 <th id="day4">Thursday</th>
                 <th id="day5">Friday</th>
                 <th id="day6">Saturday</th>
-        <div id="rows">
+                <div id="rows">
             </tr>
             <tr id="week0">
             </tr>
@@ -53,7 +53,7 @@
             </tr>
             <tr id="week5">
             </tr>
-        </div>
+            </div>
         </table>
         <script type="text/javascript">
         </script>

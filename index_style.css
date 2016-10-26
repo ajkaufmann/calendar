@@ -17,6 +17,9 @@ h1.monthName{
 table, th, td {
   border: 1px solid black;
 }
+td.veggies{
+        font-weight: bolder;
+}
 th, td {
   padding: 15px;
 }
