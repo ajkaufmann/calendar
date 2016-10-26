@@ -169,7 +169,7 @@ $(document).ready(function() {
     $.post('user_eventAjax.php', {thisMonth: thisMonth}).done(
       function(data) {
         // JSONObj = data;
-        if(!(data.event_name=="_no_user")) updateCalendar(data, false);
+        if(data.event_name=="_no_user") updateCalendar(data, false);
         else updateCalendar(data, true);
 
         alert(!(data.event_name=="_no_user"));
@@ -186,29 +186,46 @@ $(document).ready(function() {
     var newMonth = months[currentMonth.month];
     $('h1#monthName').html(months[currentMonth.month]);
     clearCalendar();
-    for (var w in weeks) {
+    for (var w in weeks) { // for each week in the month
       var days = weeks[w].getDates();
       var weekString = "week" + w;
       var newWeek = document.createElement("tr");
       newWeek.setAttribute("id", weekString);
       document.getElementById("table-id").appendChild(newWeek);
-      for (var d in days) {
+      for (var d in days) { //each day in the week
         var newLi = document.createElement("td");
-        if (days[d].getMonth() == currentMonth.month) {
-          newLi.appendChild(document.createTextNode(days[d].getDate()));
-          //for each event on that day for the user
-          //write in a text node for that event
+        if (days[d].getMonth() == currentMonth.month) { //if the day is in that month (makes sure we don't pring out 31 if thats the sunday of the week etc)
+          newLi.appendChild(document.createTextNode(days[d].getDate())); //add the day to a the "box"
+          newLi.setAttribute("class", "veggies"); //set its clas to veggies
+          var dayInfo = document.createElement("ul") //make a list of all of the events for that day
+          dayInfo.setAttribute("class", "eventActivites"); //that list now has the class of eventActivities
+          if(hasUser){ //if there is a user check what's going on for that use during that day
+            for(var i = 0; i < userEvents.length; i++){ //for each event during that day
+              var eventDate = userEvents[i].event_date;
+              var eventDay = eventDate[eventDate.length - 2] + eventDate[eventDate.length - 1];
+              if(days[d].getDate() == eventDay){ //if the event's day is the current day of the month
+                  dayInfo.appendChild(document.createElement("br")); //add a new line (just puts stuff on new lines)
+                  var eventNode = dayInfo.appendChild(document.createElement("li")); //makes a list item for the new event to be added to
+                  eventNode.appendChild(document.createTextNode(userEvents[i].event_time+": " + userEvents[i].event_name)); //add atext node into that list item
+                  eventNode.addEventListener("click", alertFunction(eventNode.html), false);
+                  // dayInfo.appendChild(document.createTextNode(userEvents[i].event_time+": "));
+                  // dayInfo.appendChild(document.createTextNode(userEvents[i].event_name));
+                  // dayInfo.addEventListener("click",alertFunction, false);
+                  dayInfo.appendChild(eventNode);
+              }
+            }
+          }
+          newLi.appendChild(dayInfo);
         }
-        newLi.setAttribute("class", "veggies");
+
         document.getElementById(weekString).appendChild(newLi);
       }
     }
   }
 
-
-
-
-
+  function alertFunction(content){
+    alert("Alert function - Event Clicked!" + content);
+  }
 
   function clearCalendar() {
     for (var i = 0; i < 6; i++) {
@@ -222,8 +239,6 @@ $(document).ready(function() {
       }
     }
   }
-
-
 
   function getUserEventsCallback(event) {
     //alert( "Your file contains the text: " + event.target.responseText );
