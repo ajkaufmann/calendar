@@ -346,11 +346,9 @@ $(document).ready(function() {
             getUserEvents(); // Whenever the month is updated, we'll need to re-render the calendar in HTML
             // alert("The new month is " + currentMonth.month + " " + currentMonth.year);
         }, false);
-        $('#create-user').button().on("click", function(){
-                dialog.dialog("open");
-        });
 
         getUserEvents(); // load the current month's calendar
+        //$("#modifyDayForm").hide();
 
         function getUserEvents() {
             var numMonth = currentMonth.month + 1;
@@ -386,6 +384,17 @@ $(document).ready(function() {
             }
         }
 
+        function modDayEvents(buttonID){
+                var splitButtonID = buttonID.split("-");
+                var day = "%"+splitButtonID[1];
+                $.post('getDayEvents_AJAX.php', {day: day}).done(
+                           function(data){
+                                   alert("inside here.");
+                                   alert(data[0].event_date);
+                           }
+            );
+        }
+
         // This updateCalendar() function only alerts the dates in the currently specified month.  You need to write
         // it to modify the DOM (optionally using jQuery) to display the days and weeks in the current month.
         function updateCalendar(userEvents, hasUser) {
@@ -401,6 +410,7 @@ $(document).ready(function() {
                 newWeek.setAttribute("id", weekString);
                 document.getElementById("table-id").appendChild(newWeek);
                 for (var d in days) { //each day in the week
+                    var addButton = false;
                     var newLi = document.createElement("td");
                     if (days[d].getMonth() == currentMonth.month) { //if the day is in that month (makes sure we don't pring out 31 if thats the sunday of the week etc)
                         newLi.appendChild(document.createTextNode(days[d].getDate())); //add the day to a the "box"
@@ -415,26 +425,36 @@ $(document).ready(function() {
                                     dayInfo.appendChild(document.createElement("br")); //add a new line (just puts stuff on new lines)
                                     var eventNode = dayInfo.appendChild(document.createElement("li")); //makes a list item for the new event to be added to
                                     eventNode.appendChild(document.createTextNode(userEvents[i].event_time + ": " + userEvents[i].event_name)); //add a text node into that list item
-                                    var buttonDiv = document.createElement("div");
-                                    buttonDiv.setAttribute("id", "modEvent");
-                                    var button = document.createElement("input");
-                                    button.setAttribute("type", "button");
-                                    button.setAttribute("id", "create-user");
-                                    button.setAttribute("value", "PLEASE WORK!");
-                                    buttonDiv.appendChild(button);
-                                    //buttonDiv.innerHTML = createEditButton();
-                                    eventNode.appendChild(buttonDiv);
                                     // dayInfo.appendChild(document.createTextNode(userEvents[i].event_time+": "));
                                     // dayInfo.appendChild(document.createTextNode(userEvents[i].event_name));
                                     // dayInfo.addEventListener("click",alertFunction, false);
                                     dayInfo.appendChild(eventNode);
+                                    addButton = true;
+
                                 }
                             }
+                        }
+                        if (addButton) {
+                            var buttonDiv = document.createElement("div");
+                            buttonDiv.setAttribute("id", "modEvent");
+                            var button = document.createElement("input");
+                            button.setAttribute("type", "button");
+                            var buttonID = "editDay-" + days[d].getDate();
+                            button.setAttribute("id", buttonID);
+                            button.setAttribute("value", "PLEASE WORK!");
+                            buttonDiv.appendChild(button);
+                            dayInfo.appendChild(buttonDiv);
                         }
                         newLi.appendChild(dayInfo);
                     }
 
+
                     document.getElementById(weekString).appendChild(newLi);
+                    if(addButton){
+                            document.getElementById(buttonID).addEventListener("click", function(){
+                                    modDayEvents(buttonID);
+                            }, false);
+                    }
                 }
             }
 
