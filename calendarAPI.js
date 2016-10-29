@@ -218,7 +218,6 @@ $(document).ready(function() {
       }, function(data) {
         alert("Event edited? " + data.success);
         getUserEvents();
-        $("#modfiyDayForm").hide();
       });
     });
     $("#deleteEvent" + eventItem.eventid).click(function() {
@@ -238,7 +237,6 @@ $(document).ready(function() {
       }, function(data) {
         alert("Event deleted?" + data.success);
         getUserEvents();
-        $("#modfiyDayForm").hide();
       }); //make sure to re show the  calendar here!
     });
   }
@@ -375,38 +373,38 @@ $("#logout_btn").click(function() {
 });
 
 function makeEventAjax(event) {
-    //alert("event Button clicked!")
-    var event_name = document.getElementById("event_name").value;
-    var event_date = document.getElementById("event_date").value;
-    var event_time = document.getElementById("event_time").value;
-    var recurring = document.getElementById("recurring").value;
+  //alert("event Button clicked!")
+  var event_name = document.getElementById("event_name").value;
+  var event_date = document.getElementById("event_date").value;
+  var event_time = document.getElementById("event_time").value;
+  var recurring = document.getElementById("recurring").value;
 
-    // Make a URL-encoded string for passing POST data:
-    var dataString =
-        "event_name=" + encodeURIComponent(event_name) +
-        "&event_date=" + encodeURIComponent(event_date) +
-        "&event_time=" + encodeURIComponent(event_time) +
-        "&recurring=" + encodeURIComponent(recurring);
+  // Make a URL-encoded string for passing POST data:
+  var dataString =
+  "event_name=" + encodeURIComponent(event_name) +
+  "&event_date=" + encodeURIComponent(event_date) +
+  "&event_time=" + encodeURIComponent(event_time) +
+  "&recurring=" + encodeURIComponent(recurring);
 
-    var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
-    xmlHttp.open("POST", "eventCreate_ajax.php", true); // Starting a POST request (NEVER send passwords as GET variables!!!)
-    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // It's easy to forget this line for POST requests
-    xmlHttp.addEventListener("load", function(event) {
-        var jsonData = JSON.parse(event.target.responseText); // parse the JSON into a JavaScript object
-        if (jsonData.success) { // in PHP, this was the "success" key in the associative array; in JavaScript, it's the .success property of jsonData
-           alert("Event made!");
-        } else {
-           alert("Event not made: ");
-        }
-    }, false); // Bind the callback to the load event
+  var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
+  xmlHttp.open("POST", "eventCreate_ajax.php", true); // Starting a POST request (NEVER send passwords as GET variables!!!)
+  xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // It's easy to forget this line for POST requests
+  xmlHttp.addEventListener("load", function(event) {
+    var jsonData = JSON.parse(event.target.responseText); // parse the JSON into a JavaScript object
+    if (jsonData.success) { // in PHP, this was the "success" key in the associative array; in JavaScript, it's the .success property of jsonData
+    alert("Event made!");
+  } else {
+    alert("Event not made: ");
+  }
+}, false); // Bind the callback to the load event
 
-    //alert(dataString);
-    xmlHttp.send(dataString); // Send the data
-    $("#event_name")[0].value = "";
-    $("#event_date")[0].value = "";
-    $("#event_time")[0].value = "";
-    $("#recurring")[0].value = "";
-    getUserEvents();
+//alert(dataString);
+xmlHttp.send(dataString); // Send the data
+$("#event_name")[0].value = "";
+$("#event_date")[0].value = "";
+$("#event_time")[0].value = "";
+$("#recurring")[0].value = "";
+getUserEvents();
 }
 
 document.getElementById("make_event").addEventListener("click", makeEventAjax, false);
