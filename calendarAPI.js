@@ -328,9 +328,6 @@ $(document).ready(function() {
   }
 }
 }
-
-
-
 }
 
 //all general listeners should go here because it allows for the entire DOM to be created before adding anything.
@@ -360,23 +357,18 @@ $("#login_btn").click(function() {
     }
   })
 });
-// $("#logout_btn").click(function() {
-//     //alert("Logging out!");
-//     $.post("logout_ajax.php", {
-//         value: true
-//     }, function(data) {
-//         if (data.success) {
-//             getUserEvents()
-//             $(".loginForm").show();
-//             $(".logoutForm").hide();
-//         }
-//     });
-// });
 $("#logout_btn").click(function() {
-  $.ajax({
-    url: './logout_ajax.php?argument=logOut',
-    success: function(data){
-      window.location.href = data;
+  //alert("Logging out!");
+  $.post("logout_ajax.php", {
+    value: true
+  }, function(data) {
+    if (data.success) {
+      getUserEvents()
+      $(".loginForm").show();
+      $(".logoutForm").hide();
+      console.log($("#username")[0].value);
+      $("#username")[0].value = "";
+      $("#password")[0].value = "";
     }
   });
 });

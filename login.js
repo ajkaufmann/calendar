@@ -46,6 +46,8 @@ function registerAjax(event) {
         }
     }, false); // Bind the callback to the load event
     xmlHttp.send(dataString); // Send the data
+    $("#username")[0].value = "";
+    $("#password")[0].value = "";
 }
 
 function makeEventAjax(event) {

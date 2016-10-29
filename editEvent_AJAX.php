@@ -18,8 +18,6 @@ if(!$stmt){
     "message" => "Incorrect Username or Password"
   ));
   exit;
-
-  exit;
 }
 
 $stmt->bind_param('ssssi',$name, $event_date, $event_time, $recurring, $id);
