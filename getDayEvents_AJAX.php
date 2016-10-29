@@ -5,8 +5,9 @@ require 'database.php';
 header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
 
 $day = $_POST['day'];
+$username = $_SESSION['username'];
 
-$stmt = $mysqli->prepare("SELECT * FROM events WHERE event_date=?");
+$stmt = $mysqli->prepare("SELECT * FROM events WHERE event_date=? AND user=?");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
@@ -15,7 +16,7 @@ if(!$stmt){
   exit;
 }
 
-$stmt->bind_param('s', $day);
+$stmt->bind_param('ss', $day, $username);
 
 $stmt->execute();
 
