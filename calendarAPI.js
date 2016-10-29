@@ -132,7 +132,6 @@ $(document).ready(function() {
                 currweek = currweek.nextWeek();
                 weeks.push(currweek);
             }
-
             return weeks;
         };
     }
@@ -188,30 +187,84 @@ $(document).ready(function() {
 
     function singleEventForm(eventItem) {
         //alert(eventItem.event_date);
-        var eventID = "eventID-" + eventItem.event_id;
-        $("#modfiyDayForm").append("<div id = " + eventID + ">");
-        $("#modfiyDayForm").append("<label for='event'>Event</label> <input type='text' name='event' id='event' value='" + eventItem.event_name + "'>");
-        $("#modfiyDayForm").append("<label for='time'>Time</label><input type='time' name='time' id='time' value=" + eventItem.event_time + ">");
-        $("#modfiyDayForm").append("<label for='eventDate'>Date</label><input type='date' name='date' id='date' value=" + eventItem.event_date + ">");
-        $("#modfiyDayForm").append("<label for='recurring'>Recurring (Y or N)</label><input type='text' name='recurring' id='recurring' value=" + eventItem.recurring + ">");
-        $("#modfiyDayForm").append("<button type='button' id='action' value='Edit'>Edit</button>");
-        $("#modfiyDayForm").append("<button type='button' id='action' value='Delete'>Delete</button>");
+        var divID = "eventID-" + eventItem.eventid;
+        //console.log(eventItem.eventid);
+        $("#modfiyDayForm").append("<div id =" + divID + ">");
+        $("#modfiyDayForm").append("<label for='event'>Event</label> <input type='text' name='event' id='event" + eventItem.eventid + "' value='" + eventItem.event_name + "'>");
+        $("#modfiyDayForm").append("<label for='time'>Time</label><input type='time' name='time' id='time" + eventItem.eventid + "' value=" + eventItem.event_time + ">");
+        $("#modfiyDayForm").append("<label for='eventDate'>Date</label><input type='date' name='date' id='date" + eventItem.eventid + "' value=" + eventItem.event_date + ">");
+        $("#modfiyDayForm").append("<label for='recurring'>Recurring (Y or N)</label><input type='text' id='recurring" + eventItem.eventid + "' name='recurring' value=" + eventItem.recurring + ">");
+        $("#modfiyDayForm").append("<button type='submit' id='editEvent" + eventItem.eventid + "' value='Edit'>Edit</button>");
+        $('#modifyDayForm').append("<input type='hidden' id='eventNum' value=" + eventItem.eventid + "/>");
+        $("#modfiyDayForm").append("<button type='submit' id='deleteEvent" + eventItem.eventid + "' value='Delete'>Delete</button>");
         $("#modfiyDayForm").append("</div>");
-
+        $("#editEvent" + eventItem.eventid).click(function() {
+            var title = $("#event" + eventItem.eventid).val();
+            var time = $("#time" + eventItem.eventid).val();
+            var date = $("#date" + eventItem.eventid).val();
+            var recurring = $("#recurring" + eventItem.eventid).val();
+            var id = eventItem.eventid;
+        //     console.log(title);
+        //     console.log(time);
+        //     console.log(date);
+        //     console.log(recurring);
+        //     console.log(id);
+            $.post("editEvent_AJAX.php", {
+                id: id,
+                name: title,
+                event_date: date,
+                event_time: time,
+                recurring: recurring
+            }, function(data) {
+                alert("Event edited? " + data.success);
+            });
+        });
+        $("#deleteEvent" + eventItem.eventid).click(function() {
+            alert("Yo! You clicked Delete button! Value was: " + eventItem.eventid);
+            var title = $("#event" + eventItem.eventid).val();
+            var time = $("#time" + eventItem.eventid).val();
+            var date = $("#date" + eventItem.eventid).val();
+            var recurring = $("#recurring" + eventItem.eventid).val();
+            var id = eventItem.eventid;
+        //     console.log(title);
+        //     console.log(time);
+        //     console.log(date);
+        //     console.log(recurring);
+        //     console.log(id);
+            $.post("deleteEvent_AJAX.php", {
+                id: id
+            }, function(data) {
+                alert("Event deleted?" + data.success);
+            }); //make sure to re show the  calendar here!
+        });
     }
 
-    function modDayEvents(buttonID) {
-        var splitButtonID = buttonID.split("-");
-        var day = "%10"
+    function modDayEvents(date) {
         $.post('getDayEvents_AJAX.php', {
-            day: day
+            day: date
         }).done(
             function(data) {
-                for(var i = 0; i < data.length; i++){
-                        singleEventForm(data[i]);
+                for (var i = 0; i < data.length; i++) {
+                    //console.log(data[i]);
+                    singleEventForm(data[i]);
                 }
             }
         );
+    }
+
+    function addButtonClick(buttonID) {
+        $("#" + buttonID).click(function() {
+            alert("EDIT DAY BUTTON CLICKED");
+            var date = $("#" + buttonID).val();
+            var splitDate = date.split("-");
+            var day = splitDate[2];
+            console.log("DAY:" + day);
+            if (day > 10) {
+                modDayEvents(date);
+            } else {
+                modDayEvents(splitDate[0] + "-" + splitDate[1] + "-0" + splitDate[2]);
+            }
+        });
     }
 
     // This updateCalendar() function only alerts the dates in the currently specified month.  You need to write
@@ -259,7 +312,9 @@ $(document).ready(function() {
                         button.setAttribute("type", "button");
                         var buttonID = "editDay-" + days[d].getDate();
                         button.setAttribute("id", buttonID);
-                        button.setAttribute("value", "Edit Day");
+                        var dayDate = days[d].getFullYear() + "-" + (days[d].getMonth() + 1) + "-" + days[d].getDate();
+                        button.innerHTML = "Modify Day";
+                        button.setAttribute("value", dayDate);
                         buttonDiv.appendChild(button);
                         dayInfo.appendChild(buttonDiv);
                     }
@@ -269,9 +324,7 @@ $(document).ready(function() {
 
                 document.getElementById(weekString).appendChild(newLi);
                 if (addButton) {
-                    document.getElementById(buttonID).addEventListener("click", function() {
-                        modDayEvents(buttonID);
-                    }, false);
+                    addButtonClick(buttonID);
                 }
             }
         }
