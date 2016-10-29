@@ -28,9 +28,16 @@
             <button type="button" id="back_month_btn">Previous Month</button>
             <button type="button" id="next_month_btn">Next Month</button>
         </div>
-        <br> Event Name: <input type="text" id="event_name" /> Event Date: <input type="Date" id="event_date" /> Event Time: <input type="Time" id="event_time" /><br> Recurring (Y or N): <input type="text" id="recurring" />
-        <button type="button" id="make_event">Make Event</button>
-        <!-- <input type="hidden" id="token" value="<?php echo $_SESSION['token'];?>"/> -->
+        <br>
+        <div id="make-event">
+            <fieldset>
+                <input type="text" id="event_name" placeholder="Event Title" />
+                <label for="event_date">On</label><input type="Date" id="event_date" />
+                <label for="event_time">At</label><input type="Time" id="event_time" />
+                <input type="text" id="recurring" placeholder="Recurring (Y or N)" />
+                <button type="button" id="make_event">Make Event</button>
+            </fieldset>
+        </div>
 
         <table style="width:100%" id="table-id">
             <tr id="headers">
@@ -63,24 +70,8 @@
         <script src="calendarAPI.js"></script>
 
         <!-- HTML ELEMENTS THAT ARE SELECTIVELY DISPLAYED -->
-        <div id="modfiyDayForm" title="Create new user">
-            <form>
-                <fieldset>
-                    <label for="event">Event</label>
-                    <input type="text" name="event" id="name" value="Jane Smith">
-                    <label for="time">Time</label>
-                    <input type="text" name="time" id="email" value="jane@smith.com">
-                    <label for="eventDate">Date</label>
-                    <input type="password" name="eventDate" id="password" value="xxxxxxx">
-
-                    <!-- Allow form submission with keyboard without duplicating the dialog button -->
-                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-                </fieldset>
-            </form>
+        <div id="modfiyDayForm">
         </div>
+</body>
 
-
-        <!-- ##################### -->
-
-
-        </html>
+</html>
