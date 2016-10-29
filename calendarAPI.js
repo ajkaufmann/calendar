@@ -204,11 +204,11 @@ $(document).ready(function() {
             var date = $("#date" + eventItem.eventid).val();
             var recurring = $("#recurring" + eventItem.eventid).val();
             var id = eventItem.eventid;
-        //     console.log(title);
-        //     console.log(time);
-        //     console.log(date);
-        //     console.log(recurring);
-        //     console.log(id);
+            //     console.log(title);
+            //     console.log(time);
+            //     console.log(date);
+            //     console.log(recurring);
+            //     console.log(id);
             $.post("editEvent_AJAX.php", {
                 id: id,
                 name: title,
@@ -226,11 +226,11 @@ $(document).ready(function() {
             var date = $("#date" + eventItem.eventid).val();
             var recurring = $("#recurring" + eventItem.eventid).val();
             var id = eventItem.eventid;
-        //     console.log(title);
-        //     console.log(time);
-        //     console.log(date);
-        //     console.log(recurring);
-        //     console.log(id);
+            //     console.log(title);
+            //     console.log(time);
+            //     console.log(date);
+            //     console.log(recurring);
+            //     console.log(id);
             $.post("deleteEvent_AJAX.php", {
                 id: id
             }, function(data) {
@@ -286,7 +286,7 @@ $(document).ready(function() {
                 if (days[d].getMonth() == currentMonth.month) { //if the day is in that month (makes sure we don't pring out 31 if thats the sunday of the week etc)
                     newLi.appendChild(document.createTextNode(days[d].getDate())); //add the day to a the "box"
                     newLi.setAttribute("class", "veggies"); //set its clas to veggies
-                    var dayInfo = document.createElement("ul") //make a list of all of the events for that day
+                    var dayInfo = document.createElement("div") //make a list of all of the events for that day
                     dayInfo.setAttribute("class", "eventActivites"); //that list now has the class of eventActivities
                     if (hasUser) { //if there is a user check what's going on for that use during that day
                         for (var i = 0; i < userEvents.length; i++) { //for each event during that day
@@ -294,7 +294,7 @@ $(document).ready(function() {
                             var eventDay = eventDate[eventDate.length - 2] + eventDate[eventDate.length - 1];
                             if (days[d].getDate() == eventDay) { //if the event's day is the current day of the month
                                 dayInfo.appendChild(document.createElement("br")); //add a new line (just puts stuff on new lines)
-                                var eventNode = dayInfo.appendChild(document.createElement("li")); //makes a list item for the new event to be added to
+                                var eventNode = dayInfo.appendChild(document.createElement("p")); //makes a list item for the new event to be added to
                                 eventNode.appendChild(document.createTextNode(userEvents[i].event_time + ": " + userEvents[i].event_name)); //add a text node into that list item
                                 // dayInfo.appendChild(document.createTextNode(userEvents[i].event_time+": "));
                                 // dayInfo.appendChild(document.createTextNode(userEvents[i].event_name));
@@ -313,8 +313,8 @@ $(document).ready(function() {
                         var buttonID = "editDay-" + days[d].getDate();
                         button.setAttribute("id", buttonID);
                         var dayDate = days[d].getFullYear() + "-" + (days[d].getMonth() + 1) + "-" + days[d].getDate();
-                        button.innerHTML = "Modify Day";
                         button.setAttribute("value", dayDate);
+                        $("#"+buttonID).html("Modify Day");
                         buttonDiv.appendChild(button);
                         dayInfo.appendChild(buttonDiv);
                     }
@@ -344,22 +344,32 @@ $(document).ready(function() {
         getUserEvents(); // Whenever the month is updated, we'll need to re-render the calendar in HTML
         // alert("The new month is " + currentMonth.month + " " + currentMonth.year);
     }, false);
-    document.getElementById("login_btn").addEventListener("click", function() {
-        $(".loginForm").hide();
-        $(".logoutForm").show();
-        loginAjax();
-        getUserEvents();
-    }, false);
-    document.getElementById("logout_btn").addEventListener("click", function(event) {
+    $("#login_btn").click(function() {
+        var username = document.getElementById("username").value; // Get the username from the form
+        var password = document.getElementById("password").value; // Get the password from the form
+        $.post("login_ajax.php", {
+            username: username,
+            password: password
+        }, function(data) {
+            if (data.success) {
+                $(".loginForm").hide();
+                $(".logoutForm").show();
+                getUserEvents();
+            } else {
+                alert("Unable to log in");
+            }
+        })
+    });
+    $("#logout_btn").click(function() {
         //alert("Logging out!");
         $.post("logout_ajax.php", {
             value: true
-        }, false).done(
-            function() {
+        }, function(data) {
+            if (data.success) {
+                getUserEvents()
                 $(".loginForm").show();
                 $(".logoutForm").hide();
-                getUserEvents()
             }
-        );
+        });
     });
 });
