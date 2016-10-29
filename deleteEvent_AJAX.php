@@ -12,7 +12,7 @@ header("Content-Type: application/json"); // Since we are sending a JSON respons
 $username = $_SESSION['username'];
 $id = $_POST['id'];
 
-$stmt = $mysqli->prepare("DELETE FROM events WHERE event_id=?");
+$stmt = $mysqli->prepare("DELETE FROM events WHERE event_id=? AND user=?");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
@@ -23,7 +23,7 @@ if(!$stmt){
   exit;
 }
 
-$stmt->bind_param('i', $id);
+$stmt->bind_param('is', $id, $username);
 
 $stmt->execute();
 

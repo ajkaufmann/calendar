@@ -300,9 +300,6 @@ $(document).ready(function() {
           dayInfo.appendChild(document.createElement("br")); //add a new line (just puts stuff on new lines)
           var eventNode = dayInfo.appendChild(document.createElement("p")); //makes a list item for the new event to be added to
           eventNode.appendChild(document.createTextNode(userEvents[i].event_time + ": " + userEvents[i].event_name)); //add a text node into that list item
-          // dayInfo.appendChild(document.createTextNode(userEvents[i].event_time+": "));
-          // dayInfo.appendChild(document.createTextNode(userEvents[i].event_name));
-          // dayInfo.addEventListener("click",alertFunction, false);
           dayInfo.appendChild(eventNode);
           addButton = true;
 
@@ -376,4 +373,41 @@ $("#logout_btn").click(function() {
     }
   });
 });
+
+function makeEventAjax(event) {
+    //alert("event Button clicked!")
+    var event_name = document.getElementById("event_name").value;
+    var event_date = document.getElementById("event_date").value;
+    var event_time = document.getElementById("event_time").value;
+    var recurring = document.getElementById("recurring").value;
+
+    // Make a URL-encoded string for passing POST data:
+    var dataString =
+        "event_name=" + encodeURIComponent(event_name) +
+        "&event_date=" + encodeURIComponent(event_date) +
+        "&event_time=" + encodeURIComponent(event_time) +
+        "&recurring=" + encodeURIComponent(recurring);
+
+    var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
+    xmlHttp.open("POST", "eventCreate_ajax.php", true); // Starting a POST request (NEVER send passwords as GET variables!!!)
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // It's easy to forget this line for POST requests
+    xmlHttp.addEventListener("load", function(event) {
+        var jsonData = JSON.parse(event.target.responseText); // parse the JSON into a JavaScript object
+        if (jsonData.success) { // in PHP, this was the "success" key in the associative array; in JavaScript, it's the .success property of jsonData
+           alert("Event made!");
+        } else {
+           alert("Event not made: ");
+        }
+    }, false); // Bind the callback to the load event
+
+    //alert(dataString);
+    xmlHttp.send(dataString); // Send the data
+    $("#event_name")[0].value = "";
+    $("#event_date")[0].value = "";
+    $("#event_time")[0].value = "";
+    $("#recurring")[0].value = "";
+    getUserEvents();
+}
+
+document.getElementById("make_event").addEventListener("click", makeEventAjax, false);
 });

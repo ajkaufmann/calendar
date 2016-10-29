@@ -11,7 +11,7 @@ $event_time = $_POST['event_time'];
 $recurring = $_POST['recurring'];
 $id = $_POST['id'];
 
-$stmt = $mysqli->prepare("UPDATE events SET event_name=?, event_date=?, event_time=?, recurring=? WHERE event_id=?");
+$stmt = $mysqli->prepare("UPDATE events SET event_name=?, event_date=?, event_time=?, recurring=? WHERE event_id=? AND user=?");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
@@ -20,7 +20,7 @@ if(!$stmt){
   exit;
 }
 
-$stmt->bind_param('ssssi',$name, $event_date, $event_time, $recurring, $id);
+$stmt->bind_param('ssssis',$name, $event_date, $event_time, $recurring, $id, $username);
 
 $stmt->execute();
 
