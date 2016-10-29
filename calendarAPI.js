@@ -217,6 +217,8 @@ $(document).ready(function() {
         recurring: recurring
       }, function(data) {
         alert("Event edited? " + data.success);
+        getUserEvents();
+        $("#modfiyDayForm").hide();
       });
     });
     $("#deleteEvent" + eventItem.eventid).click(function() {
@@ -235,6 +237,8 @@ $(document).ready(function() {
         id: id
       }, function(data) {
         alert("Event deleted?" + data.success);
+        getUserEvents();
+        $("#modfiyDayForm").hide();
       }); //make sure to re show the  calendar here!
     });
   }
@@ -363,7 +367,7 @@ $("#logout_btn").click(function() {
     value: true
   }, function(data) {
     if (data.success) {
-      getUserEvents()
+      getUserEvents();
       $(".loginForm").show();
       $(".logoutForm").hide();
       console.log($("#username")[0].value);
