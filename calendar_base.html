@@ -30,9 +30,9 @@
     </div>
     <br>
     <div id="tagSelector">
-      <label for="tags_none">Tag: None</label><input type="radio" name="tags" id="tags_none" value="tags_none" checked/>
-      <label for="tags_work"> Work</label><input type="radio" name="tags" id="tags_work" value="tags_work"/>
-      <label for="tags_leasure"> Leasure</label><input type="radio" name="tags" id="tags_leasure" value="tags_leasure"/>
+      <label for="tags_none">Tag: None</label><input type="radio" name="picker" id="none_picker" value="tags_none" checked/>
+      <label for="tags_work"> Work</label><input type="radio" name="picker" id="work_picker" value="tags_work"/>
+      <label for="tags_leasure"> Leasure</label><input type="radio" name="picker" id="leisure_picker" value="tags_leasure"/>
     </div>
     <div id="make-event">
       <fieldset>
@@ -40,9 +40,9 @@
         <label for="event_date">On</label><input type="Date" id="event_date" />
         <label for="event_time">At</label><input type="Time" id="event_time" />
         <input type="text" id="recurring" placeholder="Recurring (Y or N)" />
-        <label for="tags_none">Tag: None</label><input type="radio" name="tags" id="tags_none" value="tags_none" checked/>
-        <label for="tags_work"> Work</label><input type="radio" name="tags" id="tags_work" value="tags_work"/>
-        <label for="tags_leasure"> Leasure</label><input type="radio" name="tags" id="tags_leasure" value="tags_leasure"/>
+        <label for="tags_none">Tag: None</label><input type="radio" name="tags" id="tags_none" value="tags_none" />
+        <label for="tags_work"> Work</label><input type="radio" name="tags" id="tags_work" value="tags_work" />
+        <label for="tags_leasure"> Leisure</label><input type="radio" name="tags" id="tags_leisure" value="tags_leisure" />
         <label for="other_user"> User to share event with:</label><input type="text" id="other_user" placeholder="Other Username"/>
         <button type="button" id="make_event">Make Event</button>
       </fieldset>

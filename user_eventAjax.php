@@ -12,10 +12,13 @@ if(!isset($_SESSION['username'])){
   exit;
 }
 
+
+
 $username = htmlentities($_SESSION['username']);
 $event_date = htmlentities($_POST['thisMonth']);
+$tag = htmlentities($_POST['tag']);
 
-$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=? AND event_date LIKE ?");
+$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=? AND event_date LIKE ? AND event_descrip LIKE ? ");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
@@ -24,7 +27,7 @@ if(!$stmt){
   exit;
 }
 
-$stmt->bind_param('ss', $username, $event_date);
+$stmt->bind_param('sss', $username, $event_date, $tag);
 
 $stmt->execute();
 
@@ -37,8 +40,8 @@ while($stmt->fetch()){
     "event_name" => htmlentities($event_name),
     "event_date" => htmlentities($event_date),
     "event_time" => htmlentities($event_time),
-    "event_description" => htmlentities($event_description),
-    "recurring" => htmlentities($recurring)
+    "tag" => htmlentities($event_description),
+    "recurring" => htmlentities($recurring),
   );
   array_push($rows,$row);
 }
