@@ -230,8 +230,8 @@ $(document).ready(function() {
             var date = $("#date" + eventItem.eventid).val();
             var recurring = $("#recurring" + eventItem.eventid).val();
             var id = eventItem.eventid;
-            var token = $("#token12").val();
-            alert(token);
+        //     var token = $("#token12").val();
+        //     alert(token);
             //     console.log(title);
             //     console.log(time);
             //     console.log(date);

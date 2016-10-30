@@ -8,7 +8,7 @@ header("Content-Type: application/json"); // Since we are sending a JSON respons
 $day = htmlentities($_POST['day']);
 $username = htmlentities($_SESSION['username']);
 
-$stmt = $mysqli->prepare("SELECT * FROM events WHERE event_date=? AND user=?");
+$stmt = $mysqli->prepare("SELECT * FROM events WHERE event_date=? AND user=? ORDER BY event_time");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
