@@ -2,12 +2,17 @@
 session_start();
 require 'database.php';
 
-// if($_SESSION['token'] != $_POST['token']){
-// 	session_destroy();
-// 	die("Request forgery detected");
-// }
-
 header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
+
+//check that user is logged in
+if(!isset($_SESSION['username'])){
+  die("You must be logged in to edit events");
+}
+
+//check legit request
+if($_SESSION['token'] !== $_POST['token']){
+	die("Request forgery detected");
+}
 
 $username = htmlentities($_SESSION['username']);
 $id = htmlentities($_POST['id']);
