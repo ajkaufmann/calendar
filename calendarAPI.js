@@ -167,8 +167,12 @@ $(document).ready(function() {
         );
     }
 
+
+    $.post("logout_ajax.php", null, null);
     getUserEvents(); // load the current month's calendar
     $(".logoutForm").hide();
+    $("#make-event").hide();
+
 
     var currentMonth = new Month(2016, 9); // October 2016
 
@@ -362,6 +366,7 @@ $(document).ready(function() {
             if (data.success) {
                 $(".loginForm").hide();
                 $(".logoutForm").show();
+                $("#make-event").show();
                 getUserEvents();
             } else {
                 alert("Unable to log in");
@@ -377,6 +382,7 @@ $(document).ready(function() {
                 getUserEvents();
                 $(".loginForm").show();
                 $(".logoutForm").hide();
+                $("#make-event").hide();
                 console.log($("#username")[0].value);
                 $("#username")[0].value = "";
                 $("#password")[0].value = "";
@@ -418,6 +424,7 @@ $(document).ready(function() {
         $("#event_date")[0].value = "";
         $("#event_time")[0].value = "";
         $("#recurring")[0].value = "";
+        $("#other_user")[0].value = "";
         getUserEvents();
     }
 
