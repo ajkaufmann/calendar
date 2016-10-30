@@ -9,8 +9,8 @@ require 'database.php';
 
 header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
 
-$username = $_SESSION['username'];
-$id = $_POST['id'];
+$username = htmlentities($_SESSION['username']);
+$id = htmlentities($_POST['id']);
 
 $stmt = $mysqli->prepare("DELETE FROM events WHERE event_id=? AND user=?");
 if(!$stmt){

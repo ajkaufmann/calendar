@@ -11,8 +11,8 @@ if(!isset($_SESSION['username'])){
   exit;
 }
 
-$username = $_SESSION['username'];
-$event_date = $_POST['thisMonth'];
+$username = htmlentities($_SESSION['username']);
+$event_date = htmlentities($_POST['thisMonth']);
 
 $stmt = $mysqli->prepare("SELECT * FROM events WHERE user=? AND event_date LIKE ?");
 if(!$stmt){
@@ -31,13 +31,13 @@ $stmt->bind_result($event_id, $user, $event_name, $event_date, $event_time, $eve
 $rows = array();
 while($stmt->fetch()){
   $row = array(
-    "eventid" => $event_id,
-    "user" => $user,
-    "event_name" => $event_name,
-    "event_date" => $event_date,
-    "event_time" => $event_time,
-    "event_description" => $event_description,
-    "recurring" => $recurring
+    "eventid" => htmlentities($event_id),
+    "user" => htmlentities($user),
+    "event_name" => htmlentities($event_name),
+    "event_date" => htmlentities($event_date),
+    "event_time" => htmlentities($event_time),
+    "event_description" => htmlentities($event_description),
+    "recurring" => htmlentities($recurring)
   );
   array_push($rows,$row);
 }

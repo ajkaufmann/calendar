@@ -4,8 +4,8 @@ require 'database.php';
 
 header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
 
-$day = $_POST['day'];
-$username = $_SESSION['username'];
+$day = htmlentities($_POST['day']);
+$username = htmlentities($_SESSION['username']);
 
 $stmt = $mysqli->prepare("SELECT * FROM events WHERE event_date=? AND user=?");
 if(!$stmt){
@@ -24,14 +24,16 @@ $stmt->bind_result($event_id, $user, $event_name, $event_date, $event_time, $eve
 $rows = array();
 while($stmt->fetch()){
   $row = array(
-    "eventid" => $event_id,
-    "user" => $user,
-    "event_name" => $event_name,
-    "event_date" => $event_date,
-    "event_time" => $event_time,
-    "event_description" => $event_description,
-    "recurring" => $recurring
+    "eventid" => htmlentities($event_id),
+    "user" => htmlentities($user),
+    "event_name" => htmlentities($event_name),
+    "event_date" => htmlentities($event_date),
+    "event_time" => htmlentities($event_time),
+    "event_description" => htmlentities($event_description),
+    "recurring" => htmlentities($recurring)
   );
+  // $safe_row = addslashes($row);
+  // array_push($rows,$safe_row);
   array_push($rows,$row);
 }
 

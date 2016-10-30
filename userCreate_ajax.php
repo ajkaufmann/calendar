@@ -4,8 +4,8 @@ require 'database.php';
 
 header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
 
-$username = $_POST['username'];
-$userpass = $_POST['password'];
+$username = htmlentities($_POST['username']);
+$userpass = htmlentities($_POST['password']);
 
 $userpassCryped = crypt($userpass);
 
@@ -13,10 +13,8 @@ $stmt = $mysqli->prepare("INSERT INTO userData (username, cryptPassword) VALUES 
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
-    "message" => "Incorrect Username or Password"
+    "message" => "Error creating account, please try again."
   ));
-  exit;
-
   exit;
 }
 
