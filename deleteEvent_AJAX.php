@@ -11,9 +11,9 @@ if(!isset($_SESSION['username'])){
 }
 
 //check legit request
-if($_SESSION['token'] !== $_POST['token']){
-	die("Request forgery detected");
-}
+// if($_SESSION['token'] !== $_POST['token']){
+// 	die("Request forgery detected");
+// }
 
 $username = htmlentities($_SESSION['username']);
 $id = htmlentities($_POST['id']);

@@ -206,12 +206,13 @@ $(document).ready(function() {
         //console.log(eventItem.eventid);
         $("#modfiyDayForm").append("<div id =" + divID + ">");
         $("#modfiyDayForm").append("<label for='event'>Event</label> <input type='text' name='event' id='event" + eventItem.eventid + "' value='" + eventItem.event_name + "'>");
+        //var token = "<?php echo $_SESSION[&apos;token&apos;]; ?>";
+        //$("#modfiyDayForm").append("<label for='token'>Token</label> <input type='hidden' name='token' id='token12' value='" + token + "'>");
         $("#modfiyDayForm").append("<label for='time'>Time</label><input type='time' name='time' id='time" + eventItem.eventid + "' value=" + eventItem.event_time + ">");
         $("#modfiyDayForm").append("<label for='eventDate'>Date</label><input type='date' name='date' id='date" + eventItem.eventid + "' value=" + eventItem.event_date + ">");
         $("#modfiyDayForm").append("<label for='recurring'>Recurring (Y or N)</label><input type='text' id='recurring" + eventItem.eventid + "' name='recurring' value=" + eventItem.recurring + ">");
         $("#modfiyDayForm").append("<button type='submit' id='editEvent" + eventItem.eventid + "' value='Edit'>Edit</button>");
-        $('#modifyDayForm').append("<input type='hidden' id='eventNum' value=" + eventItem.eventid + "/>");
-        $('#modifyDayForm').append("<input type='hidden' id='token' value='Allen Cool'/>");
+        $('#modifyDayForm').append("<input type='hidden' id='eventNum' value=" + eventItem.eventid + ">");
         $("#modfiyDayForm").append("<button type='submit' id='deleteEvent" + eventItem.eventid + "' value='Delete'>Delete</button>");
         $("#modfiyDayForm").append("</div>");
         $("#editEvent" + eventItem.eventid).click(function() {
@@ -220,7 +221,7 @@ $(document).ready(function() {
             var date = $("#date" + eventItem.eventid).val();
             var recurring = $("#recurring" + eventItem.eventid).val();
             var id = eventItem.eventid;
-            var token = $("#token").val();
+            var token = $("#token12").val();
             alert(token);
             //     console.log(title);
             //     console.log(time);
@@ -233,7 +234,6 @@ $(document).ready(function() {
                 event_date: date,
                 event_time: time,
                 recurring: recurring,
-                token: token
             }, function(data) {
                 alert("Event edited? " + data.success);
                 getUserEvents();
