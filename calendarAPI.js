@@ -175,6 +175,35 @@ $(document).ready(function() {
         );
     }
 
+    function clearWeatherSection(){
+            var weatherDiv = document.getElementById("weatherData");
+            weatherDiv.remove();
+            var newDiv = document.createElement("div");
+            newDiv.setAttribute("id", "weatherData");
+            document.getElementById("weatherInfo").append(newDiv);
+            $("#zipcode")[0].value="";
+    }
+
+    function getWeather(){
+            var APICall = "http://api.openweathermap.org/data/2.5/weather?zip="
+            APICall += $("#zipcode").val() + ",us";
+            APICall += "&appid=5a8e5f0dcdd550c273e6ef3bc226791d"
+            //APICall = "http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=5a8e5f0dcdd550c273e6ef3bc226791d";
+            $.getJSON(APICall, null).done(function(data){
+                    //(K - 273.15) * 9/5 + 32
+                    var curTemp = (data.main.temp- 273.15) * 9/5 + 32
+                    curTemp = curTemp.toFixed(1);
+                    var location = data.name;
+                    //var lowTemp = (data.main.temp_min- 273.15) * 9/5 + 32
+                    //console.log(highTemp);
+                    //console.log(lowTemp);
+                    clearWeatherSection();
+                    $("#weatherData").append("Current Temperature in " + location + " is "+ curTemp + "°F");
+                    $("#weatherData").append("<br>");
+
+            });
+    }
+
 
     $.post("logout_ajax.php", null, null);
     getUserEvents(); // load the current month's calendar
@@ -182,8 +211,10 @@ $(document).ready(function() {
     $("#make-event").hide();
     $("#tags_none").prop('checked', true);
 
-
-    var currentMonth = new Month(2016, 9); // October 2016
+    var currentDate = new Date();
+    var currentYear = currentDate.getFullYear();
+    var monthNum = currentDate.getMonth();
+    var currentMonth = new Month(currentYear, monthNum); // October 2016
 
     function clearModDayForm() {
         var evnts = document.getElementById("modfiyDayForm");
@@ -206,6 +237,7 @@ $(document).ready(function() {
             }
         }
         clearModDayForm();
+        clearWeatherSection();
     }
 
     function singleEventForm(eventItem) {
@@ -455,4 +487,5 @@ $(document).ready(function() {
     $("#none_picker").click(getUserEvents);
     $("#work_picker").click(getUserEvents);
     $("#leisure_picker").click(getUserEvents);
+    $("#goWeather").click(getWeather);
 });
