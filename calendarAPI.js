@@ -211,6 +211,7 @@ $(document).ready(function() {
         $("#modfiyDayForm").append("<label for='recurring'>Recurring (Y or N)</label><input type='text' id='recurring" + eventItem.eventid + "' name='recurring' value=" + eventItem.recurring + ">");
         $("#modfiyDayForm").append("<button type='submit' id='editEvent" + eventItem.eventid + "' value='Edit'>Edit</button>");
         $('#modifyDayForm').append("<input type='hidden' id='eventNum' value=" + eventItem.eventid + "/>");
+        $('#modifyDayForm').append("<input type='hidden' id='token' value='Allen Cool'/>");
         $("#modfiyDayForm").append("<button type='submit' id='deleteEvent" + eventItem.eventid + "' value='Delete'>Delete</button>");
         $("#modfiyDayForm").append("</div>");
         $("#editEvent" + eventItem.eventid).click(function() {
@@ -219,6 +220,8 @@ $(document).ready(function() {
             var date = $("#date" + eventItem.eventid).val();
             var recurring = $("#recurring" + eventItem.eventid).val();
             var id = eventItem.eventid;
+            var token = $("#token").val();
+            alert(token);
             //     console.log(title);
             //     console.log(time);
             //     console.log(date);
@@ -229,7 +232,8 @@ $(document).ready(function() {
                 name: title,
                 event_date: date,
                 event_time: time,
-                recurring: recurring
+                recurring: recurring,
+                token: token
             }, function(data) {
                 alert("Event edited? " + data.success);
                 getUserEvents();
