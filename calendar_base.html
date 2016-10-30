@@ -1,81 +1,95 @@
 <!DOCTYPE html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="index_style.css" />
-    <meta charset="utf-8" />
-    <title> Calendar </title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-    </script>
+  <link rel="stylesheet" type="text/css" href="index_style.css" />
+  <meta charset="utf-8" />
+  <title> Calendar </title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  </script>
 </head>
 
 <body>
-    <div id="main">
-        <div class="loginForm">
-            <input type="text" id="username" placeholder="Username" />
-            <input type="password" id="password" placeholder="Password" />
-            <button id="login_btn">Log In</button>
-            <button type="button" id="register_btn">Register</button>
-        </div>
-        <div class="logoutForm">
-            <button type="button" id="logout_btn">Logout</button>
-        </div>
+  <div id="main">
+    <div class="loginForm">
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button id="login_btn">Log In</button>
+      <button type="button" id="register_btn">Register</button>
+    </div>
+    <div class="logoutForm">
+      <button type="button" id="logout_btn">Logout</button>
+    </div>
 
-        <h1 id="monthName">Your Calendar</h1>
-        <div id="monthSelector">
-            <button type="button" id="back_month_btn">Previous Month</button>
-            <button type="button" id="next_month_btn">Next Month</button>
-        </div>
-        <br>
-        <div id="make-event">
-            <fieldset>
-                <input type="text" id="event_name" placeholder="Event Title" />
-                <label for="event_date">On</label><input type="Date" id="event_date" />
-                <label for="event_time">At</label><input type="Time" id="event_time" />
-                <input type="text" id="recurring" placeholder="Recurring (Y or N)" />
-                <input type="text" id="other_user" placeholder="Other User"/>
-                <button type="button" id="make_event">Make Event</button>
-            </fieldset>
-        </div>
+    <h1 id="monthName">Your Calendar</h1>
+    <div id="monthSelector">
+      <button type="button" id="back_month_btn">Previous Month</button>
+      <button type="button" id="next_month_btn">Next Month</button>
+    </div>
+    <br>
+    <div id="tagSelector">
+      <label for="tags_none">Tag: None</label><input type="radio" name="tags" id="tags_none" value="tags_none" checked/>
+      <label for="tags_work"> Work</label><input type="radio" name="tags" id="tags_work" value="tags_work"/>
+      <label for="tags_leasure"> Leasure</label><input type="radio" name="tags" id="tags_leasure" value="tags_leasure"/>
+    </div>
+    <div id="make-event">
+      <fieldset>
+        <input type="text" id="event_name" placeholder="Event Title" />
+        <label for="event_date">On</label><input type="Date" id="event_date" />
+        <label for="event_time">At</label><input type="Time" id="event_time" />
+        <input type="text" id="recurring" placeholder="Recurring (Y or N)" />
+        <label for="tags_none">Tag: None</label><input type="radio" name="tags" id="tags_none" value="tags_none" checked/>
+        <label for="tags_work"> Work</label><input type="radio" name="tags" id="tags_work" value="tags_work"/>
+        <label for="tags_leasure"> Leasure</label><input type="radio" name="tags" id="tags_leasure" value="tags_leasure"/>
+        <label for="other_user"> User to share event with:</label><input type="text" id="other_user" placeholder="Other Username"/>
+        <button type="button" id="make_event">Make Event</button>
+      </fieldset>
+    </div>
 
-        <table style="width:100%" id="table-id">
-            <tr id="headers">
-                <th id="day0">Sunday</th>
-                <th id="day1">Monday</th>
-                <th id="day2">Tuesday</th>
-                <th id="day3">Wednesday</th>
-                <th id="day4">Thursday</th>
-                <th id="day5">Friday</th>
-                <th id="day6">Saturday</th>
-                <div id="rows">
-            </tr>
-            <tr id="week0">
-            </tr>
-            <tr id="week1">
-            </tr>
-            <tr id="week2">
-            </tr>
-            <tr id="week3">
-            </tr>
-            <tr id="week4">
-            </tr>
-            <tr id="week5">
-            </tr>
-            </div>
-        </table>
-        <script type="text/javascript">
-        </script>
-        <script src="login.js"></script>
-        <script src="calendarAPI.js"></script>
+    <table style="width:100%" id="table-id">
+      <tr id="headers">
+        <th id="day0">Sunday</th>
+        <th id="day1">Monday</th>
+        <th id="day2">Tuesday</th>
+        <th id="day3">Wednesday</th>
+        <th id="day4">Thursday</th>
+        <th id="day5">Friday</th>
+        <th id="day6">Saturday</th>
+      </tr>
+      <!-- if something is broken, check below -->
+      <!-- <div id="rows"> -->
+      <tr id="week0">
+        <td></td>
+      </tr>
+      <tr id="week1">
+        <td></td>
+      </tr>
+      <tr id="week2">
+        <td></td>
+      </tr>
+      <tr id="week3">
+        <td></td>
+      </tr>
+      <tr id="week4">
+        <td></td>
+      </tr>
+      <tr id="week5">
+        <td></td>
+      </tr>
+      <!-- </div> -->
+    </table>
+    <script type="text/javascript">
+    </script>
+    <script src="login.js"></script>
+    <script src="calendarAPI.js"></script>
 
-        <!-- HTML ELEMENTS THAT ARE SELECTIVELY DISPLAYED -->
-        <div id="wrapperDayForm">
-            <div id="modfiyDayForm">
-            </div>
-        </div>
-
+    <!-- HTML ELEMENTS THAT ARE SELECTIVELY DISPLAYED -->
+    <div id="wrapperDayForm">
+      <div id="modfiyDayForm">
+      </div>
+    </div>
+  </div>
 </body>
-
 </html>
