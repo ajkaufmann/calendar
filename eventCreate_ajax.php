@@ -14,6 +14,7 @@ $name = $_POST['event_name'];
 $event_date = $_POST['event_date'];
 $event_time = $_POST['event_time'];
 $recurring = $_POST['recurring'];
+$other_user = $_POST['other_user'];
 
 
 $stmt = $mysqli->prepare("INSERT INTO events (user, event_name, event_date, event_time, recurring) VALUES (?, ?, ?, ?, ?)");

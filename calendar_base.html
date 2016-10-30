@@ -35,6 +35,7 @@
                 <label for="event_date">On</label><input type="Date" id="event_date" />
                 <label for="event_time">At</label><input type="Time" id="event_time" />
                 <input type="text" id="recurring" placeholder="Recurring (Y or N)" />
+                <input type="text" id="other_user" placeholder="Other User"/>
                 <button type="button" id="make_event">Make Event</button>
             </fieldset>
         </div>
@@ -70,8 +71,11 @@
         <script src="calendarAPI.js"></script>
 
         <!-- HTML ELEMENTS THAT ARE SELECTIVELY DISPLAYED -->
-        <div id="modfiyDayForm">
+        <div id="wrapperDayForm">
+            <div id="modfiyDayForm">
+            </div>
         </div>
+
 </body>
 
 </html>
