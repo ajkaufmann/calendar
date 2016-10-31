@@ -335,7 +335,7 @@ $(document).ready(function() {
     function updateCalendar(userEvents, hasUser) {
         var weeks = currentMonth.getWeeks();
         var newMonth = months[currentMonth.month];
-        $('h1#monthName').html(months[currentMonth.month]);
+        $('h1#monthName').html(months[currentMonth.month]+", "+currentMonth.year);
         clearCalendar();
         for (var w in weeks) { // for each week in the month
             var days = weeks[w].getDates();
