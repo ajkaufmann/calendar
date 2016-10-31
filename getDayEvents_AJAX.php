@@ -33,16 +33,11 @@ while($stmt->fetch()){
     "event_description" => htmlentities($event_description),
     "recurring" => htmlentities($recurring)
   );
-  // $safe_row = addslashes($row);
-  // array_push($rows,$safe_row);
   array_push($rows,$row);
 }
 
 $stmt->close();
 
-// echo json_encode(array(
-//   "success" => true
-// ));
 echo json_encode($rows);
 exit;
 

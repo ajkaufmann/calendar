@@ -18,7 +18,7 @@ $username = htmlentities($_SESSION['username']);
 $event_date = htmlentities($_POST['thisMonth']);
 $tag = htmlentities($_POST['tag']);
 
-$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=? AND event_date LIKE ? AND event_descrip LIKE ? ");
+$stmt = $mysqli->prepare("SELECT * FROM events WHERE user=? AND event_date LIKE ? AND event_descrip LIKE ? ORDER BY event_time");
 if(!$stmt){
   echo json_encode(array(
     "success" => false,
@@ -48,9 +48,6 @@ while($stmt->fetch()){
 
 $stmt->close();
 
-// echo json_encode(array(
-//   "success" => true
-// ));
 echo json_encode($rows);
 exit;
 

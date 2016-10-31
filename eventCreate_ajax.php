@@ -10,8 +10,7 @@ require 'database.php';
 
 header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
 
-// var_dump($_POST);
-// var_dump(isset($other_user));
+
 $username = htmlentities($_SESSION['username']);
 $name = htmlentities($_POST['event_name']);
 $event_date = htmlentities($_POST['event_date']);
