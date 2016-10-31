@@ -242,7 +242,8 @@ $(document).ready(function() {
     //console.log(eventItem.eventid);
     $("#modfiyDayForm").append("<div id =" + divID + ">");
     $("#modfiyDayForm").append("<label for='event'>Event</label> <input type='text' name='event' id='event" + eventItem.eventid + "' value='" + eventItem.event_name + "'>");
-    //var token = "<?php echo $_SESSION[&apos;token&apos;]; ?>";
+    var token = $("#token12").val();
+    console.log(token);
     //$("#modfiyDayForm").append("<label for='token'>Token</label> <input type='hidden' name='token' id='token12' value='" + token + "'>");
     $("#modfiyDayForm").append("<label for='time'>Time</label><input type='time' name='time' id='time" + eventItem.eventid + "' value=" + eventItem.event_time + ">");
     $("#modfiyDayForm").append("<label for='eventDate'>Date</label><input type='date' name='date' id='date" + eventItem.eventid + "' value=" + eventItem.event_date + ">");
@@ -257,19 +258,13 @@ $(document).ready(function() {
       var date = $("#date" + eventItem.eventid).val();
       var recurring = $("#recurring" + eventItem.eventid).val();
       var id = eventItem.eventid;
-      //     var token = $("#token12").val();
-      //     alert(token);
-      //     console.log(title);
-      //     console.log(time);
-      //     console.log(date);
-      //     console.log(recurring);
-      //     console.log(id);
       $.post("editEvent_AJAX.php", {
         id: id,
         name: title,
         event_date: date,
         event_time: time,
         recurring: recurring,
+        tokenA: token
       }, function(data) {
         // alert("Event edited? " + data.success);
         getUserEvents();
@@ -283,7 +278,8 @@ $(document).ready(function() {
       var recurring = $("#recurring" + eventItem.eventid).val();
       var id = eventItem.eventid;
       $.post("deleteEvent_AJAX.php", {
-        id: id
+        id: id,
+        tokenA: token
       }, function(data) {
         // alert("Event deleted?" + data.success);
         getUserEvents();
@@ -306,7 +302,7 @@ $(document).ready(function() {
 
   function addButtonClick(buttonID) {
     $("#" + buttonID).click(function() {
-      // alert("EDIT DAY BUTTON CLICKED");
+      // alert("`EDIT DAY BUTTON` CLICKED");
       var date = $("#" + buttonID).val();
       var splitDate = date.split("-");
       var day = splitDate[2];
@@ -399,6 +395,7 @@ $("#login_btn").click(function() {
       $(".loginForm").hide();
       $(".logoutForm").show();
       $("#make-event").show();
+      $("#token12").val(data.token);
       getUserEvents();
     } else {
       alert("Unable to log in");
