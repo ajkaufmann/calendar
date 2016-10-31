@@ -247,7 +247,7 @@ $(document).ready(function() {
     //$("#modfiyDayForm").append("<label for='token'>Token</label> <input type='hidden' name='token' id='token12' value='" + token + "'>");
     $("#modfiyDayForm").append("<label for='time'>Time</label><input type='time' name='time' id='time" + eventItem.eventid + "' value=" + eventItem.event_time + ">");
     $("#modfiyDayForm").append("<label for='eventDate'>Date</label><input type='date' name='date' id='date" + eventItem.eventid + "' value=" + eventItem.event_date + ">");
-    $("#modfiyDayForm").append("<label for='recurring'>Recurring (Y or N)</label><input type='hidden' id='recurring" + eventItem.eventid + "' name='recurring' value=" + eventItem.recurring + ">");
+    $("#modfiyDayForm").append("<input type='hidden' id='recurring" + eventItem.eventid + "' name='recurring' value=" + eventItem.recurring + ">");
     $("#modfiyDayForm").append("<button type='submit' id='editEvent" + eventItem.eventid + "' value='Edit'>Edit</button>");
     $('#modifyDayForm').append("<input type='hidden' id='eventNum' value=" + eventItem.eventid + ">");
     $("#modfiyDayForm").append("<button type='submit' id='deleteEvent" + eventItem.eventid + "' value='Delete'>Delete</button>");
