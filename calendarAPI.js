@@ -246,7 +246,7 @@ $(document).ready(function() {
     //$("#modfiyDayForm").append("<label for='token'>Token</label> <input type='hidden' name='token' id='token12' value='" + token + "'>");
     $("#modfiyDayForm").append("<label for='time'>Time</label><input type='time' name='time' id='time" + eventItem.eventid + "' value=" + eventItem.event_time + ">");
     $("#modfiyDayForm").append("<label for='eventDate'>Date</label><input type='date' name='date' id='date" + eventItem.eventid + "' value=" + eventItem.event_date + ">");
-    $("#modfiyDayForm").append("<label for='recurring'>Recurring (Y or N)</label><input type='text' id='recurring" + eventItem.eventid + "' name='recurring' value=" + eventItem.recurring + ">");
+    $("#modfiyDayForm").append("<label for='recurring'>Recurring (Y or N)</label><input type='hidden' id='recurring" + eventItem.eventid + "' name='recurring' value=" + eventItem.recurring + ">");
     $("#modfiyDayForm").append("<button type='submit' id='editEvent" + eventItem.eventid + "' value='Edit'>Edit</button>");
     $('#modifyDayForm').append("<input type='hidden' id='eventNum' value=" + eventItem.eventid + ">");
     $("#modfiyDayForm").append("<button type='submit' id='deleteEvent" + eventItem.eventid + "' value='Delete'>Delete</button>");
@@ -257,13 +257,6 @@ $(document).ready(function() {
       var date = $("#date" + eventItem.eventid).val();
       var recurring = $("#recurring" + eventItem.eventid).val();
       var id = eventItem.eventid;
-      //     var token = $("#token12").val();
-      //     alert(token);
-      //     console.log(title);
-      //     console.log(time);
-      //     console.log(date);
-      //     console.log(recurring);
-      //     console.log(id);
       $.post("editEvent_AJAX.php", {
         id: id,
         name: title,
@@ -306,7 +299,7 @@ $(document).ready(function() {
 
   function addButtonClick(buttonID) {
     $("#" + buttonID).click(function() {
-      // alert("EDIT DAY BUTTON CLICKED");
+      // alert("`EDIT DAY BUTTON` CLICKED");
       var date = $("#" + buttonID).val();
       var splitDate = date.split("-");
       var day = splitDate[2];
